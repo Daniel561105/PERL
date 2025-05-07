@@ -1,0 +1,161 @@
+#!path to PERL
+####################################
+#check detail for built-in function
+
+@lines = `perldoc -u -f atan2`;
+foreach(@lines){
+	s/\w<(.+?)>/\U$1/g;
+	print;
+	}
+####################################
+#say has to be in certain version
+use v5.10;
+
+print "hello", 6*7, ".\n";
+say "hello";
+
+#output hello42.
+#output hello
+####################################
+#add some things that is not on the keyboard
+#uses their code point and chr()
+
+$alpha = chr(hex('03B1'));
+$omega = chr(0x03C9);
+print "$alpha","\n","$omega";
+
+print "\n";
+####################################
+#<STDIN> is the scanf function in C
+
+print "enter a number:";
+print "\n";
+
+$r = <STDIN>;
+if ($r < 0) {print "bye bye \n";
+    exit;};
+$a = $r*2*3.1415926;
+print "$a is the length \n";
+####################################
+$a = 1;
+while ($a > 0) {
+print "$a \n";
+$a += 1;
+}
+####################################
+#given two kinds of undef
+
+$stones[0] = undef;
+$stones[2] = 'a';
+$stones[3] = 'v';
+$stones[1] = 'blue';
+$stones[5] = 'pink';
+
+print $stones[0];
+print "\n";
+print $stones[4];
+print "\n";
+print $stones[-1];
+print "\n";
+print $stones[$#stones];
+print "\n";
+print $stones[-2];
+print "\n";
+print $stones[-3];
+print "\n";
+
+####################################
+#queue and stack in perl
+#there is built in function pop push 
+#pop is to pop out the last element
+#push is to put the element at the last place
+
+@array = 10..20;
+$a = pop(@array);
+$b = pop(@array);
+push(@array, 25);
+push(@array, 30);
+print $a;
+print "\n";
+print $b;
+print "\n";
+print @array;
+print "\n";
+####################################
+#queue and stack in perl
+#there is built in function shift unshift 
+#shift is to remove the first element
+#unshift is to add somthing to the beginning
+
+@array = 10..20;
+$a = shift(@array);
+$b = shift(@array);
+unshift(@array, 25);
+unshift(@array, 30);
+print $a;
+print "\n";
+print $b;
+print "\n";
+print @array;
+print "\n";
+####################################
+#there is  a problem that it can't split a string 
+#still didn't find out the reason
+
+@abc = qw/eating rocks are wrong/;
+$abc = "right";
+print "this is $abc[3]\n";
+print "this is ${abc}[3]\n";
+print "this is $abc"."[3]\n";
+print "this is $abc\[3]\n";
+####################################
+# ".=" is to concat things together
+
+@rocks = qw/aaa bbb ccc ddd eee/;
+foreach $i (@rocks) {
+    $i = "\t$i";
+    $i .= "\n";
+}
+print "stones are \n", @rocks;
+####################################
+# if add {$a <=> $b} it will be in regular sort
+# if only sort it will cmp the first element by ascii 97~104 will be 100,101...97,98...
+
+#@numbers = sort 97..104;
+@numbers = sort {$a <=> $b}97..104;
+foreach (@numbers) {
+    print "$_,";
+}
+print "\n";
+####################################
+#enum such like hash table giving index and value
+#although it can be done by foreach but each is more readability
+
+@three_letters = qw/aaa bbb ccc ddd eee/;
+
+while (($index, $value) = each @three_letters) {
+    print "$index : $value \n";
+}
+
+foreach (0..$#three_letters) {
+    print "$_ : $three_letters[$_] \n";
+}
+####################################
+#type some number and it will return name in index+1
+
+chomp(@lines = <STDIN>);
+@names = qw/fred betty barney dino wilma pebbles bamm-bamm/;
+foreach (@lines) {
+    print "$_ : @names[$_-1]\n";
+}
+####################################
+#type names and make them into a list or row by row
+
+print "type some names\n";
+chomp(@names = <STDIN>);
+@sorted = sort @names;
+
+foreach (@sorted) {
+    print "$_\n"; # change \n to comma will be a list
+}
+print "\n";
