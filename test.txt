@@ -1,0 +1,138 @@
+# perl don't need to put a function before main
+# if see redeclare...... remember to use feature or to use the right version that has the module
+
+use v5.10;
+
+running_sum(5..6);
+running_sum(1..4);
+
+
+sub running_sum {
+	state $sum = 0;
+	state @number;
+	foreach my $number (@_) {
+		push @number, $number;
+		$sum += $number;
+	}
+	print ("\n");
+	print $sum;
+	print ("\n");
+}
+####################################################
+# perl don't need to put a function before main
+# if see redeclare...... remember to use feature or to use the right version that has the module
+
+use v5.10;
+
+f_s();
+f_s();
+f_s();
+f_s();
+f_s();
+
+#one way to show fibonacci
+#sub f_s{
+#	state $first = 1;
+#	state $second = 1;
+#	my $third = $first + $second;
+#	print "$third\n";
+#	$first = $second;
+#	$second = $third;
+#}
+
+#another way to show
+sub f_s{
+	state @numbers = (0,1);
+	push @numbers,$numbers[-1]+$numbers[-2]; #put the sum into the last element
+	print "$numbers[-1]\n";
+# perl has automatic adjust memory space so there is no need to malloc or iterate the two or three element in the array
+}
+
+#$numbers[-1] means the last element of the array
+####################################################
+#foreach $_ (@_)    $_ means the iterate of @_ elements
+
+@fred = (1..1000);
+$aaa = total(@fred);
+print "$aaa\n";
+
+sub total {
+	$sum = 0;
+	foreach (@_) {
+		$sum += $_
+	}
+	return $sum;
+} 
+####################################################
+@fred = above_average(1..10);
+
+
+sub above_average {
+	$count = 0;
+	$sum = 0;
+	foreach $_ (@_) {
+		$sum += $_;
+		$count++;
+	}
+	$average = $sum / $count;
+	foreach $_ (@_) {
+		if ($_ > $average) {
+			print " $_ , ";
+		}
+	}
+	print "\n";
+}
+####################################################
+# memorize subroutine that say hi and tells you whether there is someone before you
+
+use v5.10;
+
+greet("FRED");
+greet("DANIEL");
+greet("CATHY");
+
+sub greet {
+	my $name = shift;
+	print "HI $name !";
+	state $before_name;
+	if (defined($before_name)) {
+		print "$before_name has already came!"
+	}
+	else {
+		print "you are the first one!";
+	}
+	$before_name = $name;	
+	print "\n";
+}
+print "\n";
+####################################################
+# memorize subroutine that say hi and tells you whether there is someone before you
+
+use v5.10;
+
+greet("FRED");
+greet("DANIEL");
+greet("CATHY");
+
+sub greet {
+	my $name = shift;
+	print "HI $name !";
+	state $before_name;
+	state @before;
+	
+	if (defined($before_name)) {
+		print "I have saw @before";
+	}
+	else {
+		print "you are the first one";
+	}
+	push @before , $name;
+	print "\n";
+	$before_name = 1;
+}
+print "\n";
+####################################################
+####################################################
+####################################################
+####################################################
+####################################################
